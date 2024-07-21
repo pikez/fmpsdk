@@ -13,10 +13,14 @@ def technical_indicators(
     period: int = 10,
     statistics_type: str = "SMA",
     time_delta: str = "daily",
+    from_date: str = None,
+    to_date: str = None,
 ) -> typing.Optional[typing.List[typing.Dict]]:
     """
     Query FMP /technical_indicator/ API.
 
+    :param to_date:
+    :param from_date:
     :param apikey: Your API key
     :param symbol: Company ticker
     :param period: I don't know.  10 is my only example.
@@ -30,4 +34,8 @@ def technical_indicators(
         "period": period,
         "type": __validate_statistics_type(statistics_type),
     }
+    if from_date:
+        query_vars["from"] = from_date
+    if to_date:
+        query_vars["to"] = to_date
     return __return_json_v3(path=path, query_vars=query_vars)
